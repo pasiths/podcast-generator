@@ -4,6 +4,7 @@ FROM ubuntu:latest
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and install required packages
+# Install Python and pip
 RUN apt-get update && apt-get install -y \
     python3.10 \
     python3-pip \
@@ -11,11 +12,10 @@ RUN apt-get update && apt-get install -y \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-# Only create symlinks if they don't already exist
-RUN [ ! -e /usr/bin/python3 ] || rm /usr/bin/python3 && ln -s /usr/bin/python3.10 /usr/bin/python3
-RUN [ ! -e /usr/bin/pip ] && ln -s /usr/bin/pip3 /usr/bin/pip || true
+# Ensure 'pip' is available (symlink to pip3)
+RUN ln -sf /usr/bin/pip3 /usr/bin/pip
 
-# Install Python dependencies
+# Install dependencies
 RUN pip install --no-cache-dir PyYAML
 
 # Copy the Python script

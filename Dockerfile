@@ -3,9 +3,14 @@ FROM ubuntu:latest
 RUN apt-get update && apt-get install -y \
     python3.10 \
     python3-pip \
-    git
+    git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# RUN pip3 install PyYAML
+RUN ln -s /usr/bin/python3.10 /usr/bin/python3 && \
+    ln -s /usr/bin/pip3 /usr/bin/pip
+
+RUN pip install --no-cache-dir PyYAML
 
 COPY  feed.py /usr/local/bin/feed.py
 

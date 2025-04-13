@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
 RUN ln -s /usr/bin/python3.10 /usr/bin/python3 && \
     ln -s /usr/bin/pip3 /usr/bin/pip
 
-RUN pip install --no-cache-dir PyYAML
+RUN apt-get update && apt-get install -y python3-yaml
+
 
 COPY  feed.py /usr/local/bin/feed.py
 
